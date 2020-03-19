@@ -1,19 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import AppNavigator from './src/navigation/AppNavigator'
+import { setTopLevelNavigator } from './src/navigation/navigationRef'
 
-export default function App() {
+export default () => {
   return (
-    <View style={styles.container}>
-      <Text>Hello</Text>
-    </View>
-  );
+    <AppNavigator
+      ref={(navigator) => { setTopLevelNavigator(navigator) }}
+    />
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
