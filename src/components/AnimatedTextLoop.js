@@ -3,6 +3,7 @@ import { Animated } from 'react-native'
 
 const useFadeInOut = (duration, callback) => {
   const opacity = useRef(new Animated.Value(0)).current
+  let alive = true
   let counter = 0
   const fadeDuration = duration / 2
   const animate = () => {
@@ -16,14 +17,19 @@ const useFadeInOut = (duration, callback) => {
         duration: fadeDuration
       })
     ]).start(() => {
-      callback(counter)
-      counter++
-      animate()
+      if (alive) {
+        callback(counter)
+        counter++
+        animate()
+      }
     })
   }
   useEffect(() => {
     animate()
-    return opacity.stopAnimation()
+    return () => {
+      opacity.stopAnimation()
+      alive = false
+    }
   }, [])
   return opacity
 }
